@@ -42,7 +42,7 @@ const oa=body.object_attributes;
                 "facts": [
                     {
                         "name": "Assigned to",
-                        "value": oa.assignee.name
+                        "value": body.assignee.name
                     },
                     {
                         "name": "Status",
