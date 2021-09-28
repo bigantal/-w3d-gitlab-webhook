@@ -2,7 +2,7 @@ const express = require('express');
 const favicon = require('serve-favicon');
 const path = require('path');
 const bodyParser = require('body-parser');
-const https = require('https');
+const axios = require('axios');
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -16,6 +16,7 @@ app.get('/', function (req, res) {
 
 app.post('/commit', (req, res) => {
   console.log('req', req.body)
+  res.send('ok')
 });
 
 app.post('/merge-request', (req, res) => {
@@ -79,31 +80,12 @@ app.listen(port, () => {
 
 function sendToTeams(msg, path) {
   console.log('sending to MSTeams', msg)
-  const data = JSON.stringify(msg)
-
-  const options = {
-    hostname: 'verint.webhook.office.com',
-    port: 443,
-    path: "/" + path,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': data.length
-    }
-  }
-
-  const req = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`)
-
-    res.on('data', d => {
-      process.stdout.write(d)
+  axios
+    .post('https://verint.webhook.office.com/' + path, msg)
+    .then(res => {
+      console.log(`statusCode: ${res.status}`)
     })
-  })
-
-  req.on('error', error => {
-    console.error(error)
-  })
-
-  req.write(data)
-  req.end()
+    .catch(error => {
+      console.error(error)
+    })
 }
