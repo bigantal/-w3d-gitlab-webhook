@@ -44,7 +44,7 @@ app.post('/merge-request', (req, res) => {
           },
           {
             "name": "Assigned to",
-            "value": body.assignee.name
+            "value": (body.assignee ? body.assignee.name : 'Unassigned')
           },
           {
             "name": "Status",
