@@ -1,1 +1,1 @@
-# -w3d-gitlab-webhook
+# w3d-gitlab-webhook

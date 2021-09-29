@@ -1,17 +1,19 @@
 const express = require('express');
-const favicon = require('serve-favicon');
-const path = require('path');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 
 const app = express()
 const port = process.env.PORT || 3000
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.send({
+    "available-endpoints": [
+      "/commit",
+      "/merge-request"
+    ]
+  })
 });
 
 app.post('/commit', (req, res) => {
