@@ -39,7 +39,7 @@ app.post('/merge-request', (req, res) => {
       {
         "activityTitle": `Merge Request - ${body.project.name} #${oa.iid}`,
         "activitySubtitle": oa.title,
-        "activityImage": body.project.avatar_url,
+        "activityImage": "https://img.icons8.com/ios-glyphs/30/000000/pull-request.png",
         "facts": [
           {
             "name": "Branch",
