@@ -42,7 +42,11 @@ app.post('/merge-request', (req, res) => {
         "activityImage": body.project.avatar_url,
         "facts": [
           {
-            "name": "Created by",
+            "name": "Branch",
+            "value": `${oa.source_branch} -> ${oa.target_branch}`
+          },
+          {
+            "name": "Updated by",
             "value": body.user.name
           },
           {
@@ -51,7 +55,7 @@ app.post('/merge-request', (req, res) => {
           },
           {
             "name": "Status",
-            "value": oa.action
+            "value": `${oa.action} - ${oa.state}`
           }
         ],
         "markdown": true
