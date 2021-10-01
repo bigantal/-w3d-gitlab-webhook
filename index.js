@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const findJiraId = require('./utils').findJiraId;
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -64,7 +65,7 @@ app.post('/merge-request', (req, res) => {
     "potentialAction": [
       {
         "@type": "OpenUri",
-        "name": "Open",
+        "name": "View Merge Request",
         "targets": [
           {
             "os": "default",
@@ -74,6 +75,20 @@ app.post('/merge-request', (req, res) => {
       }
     ]
   };
+
+  let jiraId = findJiraId(oa.source_branch);
+  if (jiraId) {
+    toTeams.potentialAction.push({
+      "@type": "OpenUri",
+      "name": "View Jira",
+      "targets": [
+        {
+          "os": "default",
+          "uri": `https://kanasoftware.jira.com/browse/${jiraId}`
+        }
+      ]
+    })
+  }
 
   sendToTeams(toTeams, path)
 
